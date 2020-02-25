@@ -1,6 +1,7 @@
 // DOM Elements
 const dealerHand = document.querySelector('.dealer-hand');
 const playerHand = document.querySelector('.player-hand');
+const playerWin = document.querySelector('.player-final-score');
 const playerScoreSpan = document.querySelector('.player-score');
 const cardIcon = document.querySelectorAll('.icon');
 const shuffleBtn = document.querySelector('.btn-primary');
@@ -24,6 +25,7 @@ let playerMove = 0;
 
 // Shuffle Button
 shuffleBtn.addEventListener('click', function () {
+    location.reload();
     let ul = document.querySelector('.player-hand');
     playerMove = 0;
     ul.innerHTML = '';
@@ -73,6 +75,7 @@ const generateDeck = function () {
 
 // Start the game
 function startGame () {
+    playerWin.classList.remove('show');
     generateDeck();
     shuffle(deck);
     dealCard(2);
@@ -121,14 +124,20 @@ function playerScore () {
     if (totalValue < 21) {
         playerScoreSpan.textContent = totalValue;
         console.log('Player total value Less than 1: ', totalValue);
+        playerWin.classList.add('show');
+        playerWin.textContent = 'Hit?';
     
     }else if (totalValue >= 22) {
         totalValue = 0;
-        playerScoreSpan.textContent = `${totalValue} - BUST`;
+        playerScoreSpan.textContent = totalValue;
         console.log('Player total value Greater than 21: ', totalValue);
+        playerWin.classList.add('show');
+        playerWin.textContent = 'BUST';
 
     }else if (totalValue === 21) {
-        playerScoreSpan.textContent = `${totalValue} - BLACK JACK!`;
+        playerScoreSpan.textContent = totalValue;
+        playerWin.classList.add('show');
+        playerWin.textContent = 'BLACK JACK';
     };
 };
 
