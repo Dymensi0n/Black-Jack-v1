@@ -118,10 +118,6 @@ function dealCard (lastCard) {
 // Player score function for total value of hand
 function playerScore () {
 
-    // let currentScore = playerTotalValue.reduce((a, b) => a + b, 0);
-    // //console.log("Player move: ", playerMove);
-    // console.log("Current Score: ", currentScore);
-    
     if (totalValue < 21) {
         playerScoreSpan.textContent = totalValue;
         console.log('Player total value Less than 1: ', totalValue);
