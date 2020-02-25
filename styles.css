@@ -1,0 +1,97 @@
+:root {
+    --bg-main-color: #2d5c1a;
+    --title-color: #ffffff;
+    --icon-color: rgb(226, 216, 76);
+    --suit-red: red;
+    --suit-black: black;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+@keyframes throwCard {
+    from {transform: rotate(500deg); opacity: 0;}
+    to {top: 0px; opacity: 100%;}
+}
+
+#main-heading {
+    font-size: 8rem;
+    font-weight: 600;
+    color: var(--title-color);
+    background: var(--bg-main-color);
+    padding: 5%;
+}
+
+.board {
+    background: #dddddd;
+    width: 50%;
+    padding: 10% 5%;
+    margin: auto 200px;
+}
+
+.btn-primary {
+    background-color: black;
+    border: none;
+    margin: 1% 1%;
+    text-align: center;
+    border-radius: 50%;
+}
+
+.btn-primary:hover {
+    border: none;
+    background-color: rgb(38, 161, 0);
+}
+
+.dealer-hand {
+    list-style-type: none;
+    text-align: center;
+}
+
+.player-hand {
+    list-style-type: none;
+    text-align: center;
+}
+
+.hand-text {
+    font-size: 20px;
+}
+
+.card {
+    float: left;
+    border-radius: 10%;
+    height: 150px;
+    width: 300px;
+    padding: 0;
+    margin: 1% 1%;
+    box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.25);
+}
+
+.rotate-l {
+    animation-name: throwCard;
+    animation-duration: 0.75s;
+    animation-timing-function: ease;
+}
+
+.icons {
+    font-size: 4rem;
+    color: var(--icon-color);
+}
+
+.suit.red {
+    font-size: 1.5rem;
+    color: var(--suit-red);
+}
+
+.suit.black {
+    font-size: 1.5rem;
+    color: var(--suit-black);
+}
+
+.svg-icon {
+    display: inline-block;
+    font-size: 1.5rem;
+    width: 100px;
+    margin: auto;
+}
