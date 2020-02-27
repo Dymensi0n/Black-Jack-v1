@@ -55,11 +55,13 @@ body {
 .dealer-hand {
     list-style-type: none;
     text-align: center;
+    padding: 5%;
 }
 
 .player-hand {
     list-style-type: none;
     text-align: center;
+    padding: 5%;
 }
 
 .hand-text {

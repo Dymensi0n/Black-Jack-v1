@@ -12,21 +12,35 @@
     <div class="text-center">
         <h1 id="main-heading" class="text-center">Black Jack</h1>
     </div>
-    <div class="btn btn-primary"><i class="fas fa-random"></i></div><span class="new-game-text"> New Game</span>
+    
 
     <div class="container board">
         <div class="row">
+            <h1 class="hand-text mx-4">Dealer Hand</h1>
+            <h1 class="hand-text">Card Value: <span class="dealer-score">0</span></h1>
+        </div>
+
+        <div class="row">
+            <div class="dealer-hand">
+
+            </div>
+        </div>
+        <div class="container board">
+            <div class="row">
             <h1 class="hand-text mx-4">Player Hand</h1>
-            <h1 class="hand-text">Score: <span class="player-score">0</span></h1>
+            <h1 class="hand-text">Card Value: <span class="player-score">0</span></h1>
             <div class="player-final-score show"></div>
         </div>
-        <ul class="dealer-hand"></ul>
+    </div>
+        <div class="row">
+            <div class="player-hand">
 
-        <div class="player-hand">
+            </div>
         </div>
         <div class="btn btn-primary btn-hit"><i class="fas fa-plus"></i></div>
         <div class="btn btn-primary btn-stand"><i class="fas fa-hand-paper"></i></div>
     </div> 
+    <div class="btn btn-primary btn-shuffle"><i class="fas fa-random"></i></div><span class="new-game-text"> New Game</span>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
