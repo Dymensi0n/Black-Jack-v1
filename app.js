@@ -6,6 +6,7 @@ const playerScoreSpan = document.querySelector('.player-score');
 const cardIcon = document.querySelectorAll('.icon');
 const shuffleBtn = document.querySelector('.btn-primary');
 const hitBtn = document.querySelector('.btn-hit');
+const btnStand = document.querySelector('.btn-stand');
 
 const cardValue = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King', 'Ace'];
 const suitsSvg = ['svg/Suits_Vectors_Diamond.svg',
@@ -21,7 +22,7 @@ let totalValue = 0;
 
 const deck = [];
 
-let playerMove = 0;
+let playerMove = 0; // 0 = default, 1 = Hit, 2 = Stand
 
 // Shuffle Button
 shuffleBtn.addEventListener('click', function () {
@@ -35,11 +36,17 @@ shuffleBtn.addEventListener('click', function () {
 
 // Hit Button
 hitBtn.addEventListener('click', function () {
-    playerMove = 1;
-    let hit = document.querySelector('.player-hand');
-    shuffle(deck);
-    dealCard(1);
+    
+    if (playerMove === 0) {
+        let hit = document.querySelector('.player-hand');
+        shuffle(deck);
+        dealCard(1);
+    };
+});
 
+btnStand.addEventListener('click', function () {
+    playerMove = 2;
+    btnStand.classList.add('btn-active');
 });
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -118,6 +125,12 @@ function dealCard (lastCard) {
     playerScore();
 };
 
+function playerStatus () {
+    if (playerMove === 0) {
+
+    }
+};
+
 // Player score function for total value of hand
 function playerScore () {
 
@@ -133,11 +146,13 @@ function playerScore () {
         console.log('Player total value Greater than 21: ', totalValue);
         playerWin.classList.add('show');
         playerWin.textContent = 'BUST';
+        playerMove = 2;
 
     }else if (totalValue === 21) {
         playerScoreSpan.textContent = totalValue;
         playerWin.classList.add('show');
         playerWin.textContent = 'BLACK JACK';
+        playerMove = 2;
     };
 };
 
