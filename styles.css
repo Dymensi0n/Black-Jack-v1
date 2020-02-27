@@ -30,15 +30,18 @@ body {
 }
 
 .board {
-    background: #dddddd;
-    width: 50%;
-    padding: 10% 5%;
-    margin: auto 200px;
+    border-radius: 20px;
+    background: var(--bg-main-color);
+    width: 100%;
+    padding: 1% 5% 7% 1%;
+    margin: auto 1rem;
 }
 
 .btn-primary {
     background-color: black;
     border: none;
+    width: 40px;
+    height: 40px;
     margin: 1% 1%;
     text-align: center;
     border-radius: 50%;
@@ -61,13 +64,14 @@ body {
 
 .hand-text {
     font-size: 20px;
+    color: var(--title-color);
 }
 
 .card {
     float: left;
-    border-radius: 10%;
-    height: 150px;
-    width: 300px;
+    border-radius: 10px;
+    height: 180px;
+    width: 120px;
     padding: 0;
     margin: 1% 1%;
     box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.25);
@@ -102,7 +106,10 @@ body {
 }
 
 .player-final-score {
-    
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    color: var(--title-color);
 }
 
 .blackjack {
