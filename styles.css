@@ -12,13 +12,13 @@ body {
 }
 
 @keyframes throwCard {
-    from {transform: rotate(500deg); opacity: 0;}
+    from {transform: rotate(45deg); transform-origin: 20% 50%; opacity: 0;}
     to {top: 0px; opacity: 100%;}
 }
 
 @keyframes flashWin {
-    from {transform: rotate(500deg); opacity: 0;}
-    to {top: 0px; opacity: 100%;}
+    from {opacity: 0;}
+    to {opacity: 100%;}
 }
 
 #main-heading {
@@ -105,11 +105,18 @@ body {
     
 }
 
+.blackjack {
+    
+}
+
 .show {
     display: inline-block;
     width: 100%;
     text-align: center;
     font-size: 4rem;
+    animation-name: flashWin;
+    animation-duration: 0.75s;
+    animation-timing-function: ease;
 }
 
 .hide {
