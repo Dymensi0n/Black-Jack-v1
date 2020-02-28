@@ -4,6 +4,7 @@
     --icon-color: rgb(226, 216, 76);
     --suit-red: red;
     --suit-black: black;
+    --grey-color: rgba(255, 255, 255, 0.25);
 }
 
 body {
@@ -25,14 +26,17 @@ body {
     font-size: 8rem;
     font-weight: 600;
     color: var(--title-color);
-    background: var(--bg-main-color);
-    padding: 5%;
+    background: black;
+    padding: 2%;
+    box-shadow: 2px 5px 20px rgba(0, 0, 0, 0.5);
 }
 
 .board {
     border-radius: 20px;
     background: var(--bg-main-color);
+    box-shadow: 2px 5px 20px rgba(0, 0, 0, 0.5);
     width: 100%;
+    height: 400px;
     padding: 1% 5% 7% 1%;
     margin: auto 1rem;
 }
@@ -55,13 +59,13 @@ body {
 .dealer-hand {
     list-style-type: none;
     text-align: center;
-    padding: 5%;
+    padding: 0;
 }
 
 .player-hand {
     list-style-type: none;
     text-align: center;
-    padding: 5%;
+    padding: 0;
 }
 
 .hand-text {
@@ -111,7 +115,7 @@ body {
     width: 100%;
     margin: auto;
     text-align: center;
-    color: var(--title-color);
+    color: var(--grey-color);
 }
 
 .blackjack {

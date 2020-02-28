@@ -114,8 +114,8 @@ function dealCard (lastCard, user) {
         for (let i = 0; i < lastCard; i++) {
 
             if (user === playerHand) {
+
             const divElement = document.createElement('div');
-            //const html = divElement.innerHTML = `<div class="card"><img class="svg-icon" src="${deck[i].suit}" width="50" height="50">${deck[i].value}</div>`;
             const html = divElement.innerHTML = `<div class="card"><img class="svg-icon" src="${deck[i].suit}" width="50" height="50"><p>${deck[i].value}</p></div>`;
             divElement.classList.add('rotate-l');
             user.appendChild(divElement);
@@ -125,14 +125,22 @@ function dealCard (lastCard, user) {
                 playerCardValue += 10;
                 deck.pop();
             }else if (deck[i].value === 'Ace'){
-                //console.log("Found an ACE! ->>>", deck[i].value);
                 playerCardValue += 11;
-                checkAce(user, playerCardValue);
-                deck.pop();
+
+                if (playerCardValue > 21) {
+                    playerCardValue -= 10;
+                    playerScoreSpan.textContent = playerCardValue + "Ace (1)";
+                    console.log("Current Value: ", playerCardValue);
+                    deck.pop();
+                }else {
+                    playerScoreSpan.textContent = playerCardValue + "Ace (11)";
+                    console.log("playerCardValue is: ", playerCardValue);
+                    deck.pop();
+                };
+                
             }else {
                 playerTotalValue.push(deck[i].value);
                 playerCardValue += deck[i].value;
-                //console.log("Toal value is: ", playerCardValue);
                 deck.pop();
             };
 
@@ -149,7 +157,18 @@ function dealCard (lastCard, user) {
                 deck.pop();
             }else if (deck[i].value === 'Ace'){
                 dealerCardValue += 11;
-                deck.pop();
+
+                if (dealerCardValue > 21) {
+                    dealerCardValue -= 10;
+                    dealerScoreSpan.textContent = dealerCardValue + "Ace (1)";
+                    console.log("Current Value: ", dealerCardValue);
+                    deck.pop();
+                }else {
+                    dealerScoreSpan.textContent = dealerCardValue + "Ace (11)";
+                    console.log("dealerCardValue is: ", dealerCardValue);
+                    deck.pop();
+                };
+
             }else {
                 dealerTotalValue.push(deck[i].value);
                 dealerCardValue += deck[i].value;
@@ -172,14 +191,14 @@ function playerScore () {
 
     if (playerCardValue < 21) {
         playerScoreSpan.textContent = playerCardValue;
-        console.log('Player total value Less than 1: ', playerCardValue);
+        //console.log('Player total value Less than 1: ', playerCardValue);
         playerWin.classList.add('show');
         playerWin.textContent = 'Hit?';
     
     }else if (playerCardValue >= 22) {
         //playerCardValue = 0;
         playerScoreSpan.textContent = playerCardValue;
-        console.log('Player total value Greater than 21: ', playerCardValue);
+        //console.log('Player total value Greater than 21: ', playerCardValue);
         playerWin.classList.add('show');
         playerWin.textContent = 'BUST';
         playerMove = 2;
@@ -207,12 +226,18 @@ function dealerScore () {
 };
 
 // Checks if player receives Ace, and score is higher than 21 it will remove 10, making the value of Ace a 1
-function checkAce (user, checkValue) {
+// function checkAce (user, checkValue) {
 
-    if (checkValue > 21) {
-        checkValue -= 10;
-        console.log("Current Value: ", checkValue);
-    };
-};
+//     if (checkValue > 21) {
+//         checkValue -= 10;
+//         playerHand.textContent = checkValue + " Ace(1)";
+//         console.log(playerHand.children);
+//         console.log("Current Value: ", checkValue);
+//     }else {
+//         user.textContent = checkValue + " Ace(11)";
+//         console.log("CheckValue is: ", checkValue);
+//     };
+// };
+
 
 startGame();
