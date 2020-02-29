@@ -7,12 +7,15 @@ const playerHand = document.querySelector('.player-hand');
 const playerWin = document.querySelector('.player-option');
 const playerScoreSpan = document.querySelector('.player-score');
 
+const cardBackStyle = document.querySelector('.card-back');
 const cardIcon = document.querySelectorAll('.icon');
 const shuffleBtn = document.querySelector('.btn-shuffle');
 const hitBtn = document.querySelector('.btn-hit');
 const btnStand = document.querySelector('.btn-stand');
 
 const cardValue = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King', 'Ace'];
+
+const cardBack = ['svg/CardBack.svg'];
 const suitsSvg = ['svg/Suits_Vectors_Diamond.svg',
                     'svg/Suits_Vectors_Club.svg',
                     'svg/Suits_Vectors_Heart.svg',
@@ -40,6 +43,9 @@ shuffleBtn.addEventListener('click', function () {
 // Hit Button
 hitBtn.addEventListener('click', function () {
     
+    console.log(playerTotalValue);
+    
+
     if (playerMove === 0) {
         let hit = document.querySelector('.player-hand');
         shuffle(deck);
@@ -51,13 +57,14 @@ hitBtn.addEventListener('click', function () {
 btnStand.addEventListener('click', function () {
     playerMove = 2;
     btnStand.classList.add('btn-active');
-    compare();
+    compareScore();
 });
 
 // Initialize the game
 function init () {
 
     location.reload();
+    
     playerWin.innerHTML = '';
     let ph = document.querySelector('.player-hand');
     let dh = document.querySelector('.dealer-hand');
@@ -101,6 +108,7 @@ const generateDeck = function () {
 
 // Start the game
 function startGame () {
+    console.log(playerTotalValue);
     playerWin.classList.remove('show');
     generateDeck();
     shuffle(deck);
@@ -121,6 +129,7 @@ function dealCard (lastCard, user) {
         console.log('Generating a new deck');
         generateDeck();
     };
+
     // Player Cards
     
         for (let i = 0; i < lastCard; i++) {
@@ -128,31 +137,59 @@ function dealCard (lastCard, user) {
             if (user === playerHand) {
 
             const divElement = document.createElement('div');
-            const html = divElement.innerHTML = `<div class="card"><img class="svg-icon" src="${deck[i].suit}" width="50" height="50"><p>${deck[i].value}</p></div>`;
+            const html = `<div class="card"><img class="svg-icon" src="${deck[i].suit}" width="50" height="50"><p>${deck[i].value}</p></div>`;
+            const cardBackHtml = `<div class="${cardBackStyle}">
+                                    <img class="svg-icon-back" src="${deck[i].suit = cardBack}" width="120" height="180"><p>
+                                    </p>
+                                    </div>`;
+            
+            divElement.innerHTML = cardBackHtml;
             divElement.classList.add('rotate-l');
             user.appendChild(divElement);
-    
+
+            coverCards(deck[i]);
+            
             if (deck[i].value === 'Jack' || deck[i].value === 'Queen' || deck[i].value === 'King') {
                 playerCardValue += 10;
+                playerTotalValue.push(playerCardValue);
                 deck.pop();
             }else if (deck[i].value === 'Ace'){
                 playerCardValue += 11;
 
                 if (playerCardValue > 21) {
                     playerCardValue -= 10;
+                    playerTotalValue.push(playerCardValue);
                     playerScoreSpan.textContent = playerCardValue + "Ace (1)";
                     //console.log("Current Value: ", playerCardValue);
                     deck.pop();
                 }else {
                     playerScoreSpan.textContent = playerCardValue + "Ace (11)";
+                    playerTotalValue.push(playerCardValue);
                     //console.log("playerCardValue is: ", playerCardValue);
                     deck.pop();
                 };
                 
             }else {
-                playerTotalValue.push(deck[i].value);
+                playerTotalValue.push(playerCardValue);
                 playerCardValue += deck[i].value;
                 deck.pop();
+            };
+
+            // Reveals Dealer Cards
+            function coverCards (cardIndex, index, face) {
+                this.cardIndex = cardIndex;
+
+                if (playerTotalValue.length <= 1) {
+                    divElement.innerHTML = cardBackHtml;
+                    divElement.classList.add('rotate-l');
+                    user.appendChild(divElement);
+                    console.log(`Index of cards is: ${cardIndex.suit}`);    
+                }else {
+                    divElement.innerHTML = html;
+                    divElement.classList.add('rotate-l');
+                    user.appendChild(divElement);
+                }
+
             };
 
             // Dealer Cards
@@ -210,6 +247,7 @@ function playerScore () {
         playerWin.classList.add('show');
         playerWin.classList.add('bust');
         playerWin.textContent = 'BUST';
+
         playerMove = 2;
 
     }else if (playerCardValue === 21) {
@@ -244,7 +282,7 @@ function dealerScore () {
     return dealerCardValue;
 };
 
-function compare () {
+function compareScore () {
     
     if(dealerCardValue > playerCardValue) {
         console.log("Dealer Wins!");

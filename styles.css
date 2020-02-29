@@ -108,6 +108,17 @@ p {
     transition: ease 0.25s;
 }
 
+.card-back {
+    float: left;
+    border-radius: 10px;
+    height: 180px;
+    width: 120px;
+    padding: 0;
+    margin: 1% 4px;
+    box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.25);
+    transition: ease 0.25s;
+}
+
 .rotate-l {
     animation-name: throwCard;
     animation-duration: 0.75s;
@@ -133,6 +144,13 @@ p {
     display: inline-block;
     font-size: 1.5rem;
     width: 100px;
+    margin: auto;
+}
+
+.svg-icon-back {
+    display: inline-block;
+    font-size: 1.5rem;
+    width: 126px;
     margin: auto;
 }
 
