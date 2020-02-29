@@ -3,7 +3,7 @@ const dealerHand = document.querySelector('.dealer-hand');
 const dealerScoreSpan = document.querySelector('.dealer-score');
 
 const playerHand = document.querySelector('.player-hand');
-const playerWin = document.querySelector('.player-final-score');
+const playerWin = document.querySelector('.player-option');
 const playerScoreSpan = document.querySelector('.player-score');
 
 const cardIcon = document.querySelectorAll('.icon');
@@ -54,6 +54,7 @@ hitBtn.addEventListener('click', function () {
 btnStand.addEventListener('click', function () {
     playerMove = 2;
     btnStand.classList.add('btn-active');
+    compare();
 });
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -191,14 +192,11 @@ function playerScore () {
 
     if (playerCardValue < 21) {
         playerScoreSpan.textContent = playerCardValue;
-        //console.log('Player total value Less than 1: ', playerCardValue);
         playerWin.classList.add('show');
         playerWin.textContent = 'Hit?';
     
     }else if (playerCardValue >= 22) {
-        //playerCardValue = 0;
         playerScoreSpan.textContent = playerCardValue;
-        //console.log('Player total value Greater than 21: ', playerCardValue);
         playerWin.classList.add('show');
         playerWin.textContent = 'BUST';
         playerMove = 2;
@@ -209,6 +207,7 @@ function playerScore () {
         playerWin.textContent = 'BLACK JACK';
         playerMove = 2;
     };
+    return playerCardValue;
 };
 // Player score function for total value of hand
 function dealerScore () {
@@ -223,21 +222,19 @@ function dealerScore () {
     }else if (dealerCardValue === 21) {
         dealerScoreSpan.textContent = dealerCardValue;
     };
+    return dealerCardValue;
 };
 
-// Checks if player receives Ace, and score is higher than 21 it will remove 10, making the value of Ace a 1
-// function checkAce (user, checkValue) {
-
-//     if (checkValue > 21) {
-//         checkValue -= 10;
-//         playerHand.textContent = checkValue + " Ace(1)";
-//         console.log(playerHand.children);
-//         console.log("Current Value: ", checkValue);
-//     }else {
-//         user.textContent = checkValue + " Ace(11)";
-//         console.log("CheckValue is: ", checkValue);
-//     };
-// };
+function compare () {
+    
+    if(dealerCardValue > playerCardValue) {
+        console.log("Dealer Wins!");
+    }else if (playerCardValue > dealerCardValue){
+        console.log("Player Wins!");
+    }else {
+        console.log("Draw");
+    };
+};
 
 
 startGame();
