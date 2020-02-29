@@ -44,10 +44,8 @@ shuffleBtn.addEventListener('click', function () {
 hitBtn.addEventListener('click', function () {
     
     console.log(playerTotalValue);
-    
 
     if (playerMove === 0) {
-        let hit = document.querySelector('.player-hand');
         shuffle(deck);
         dealCard(1, playerHand);
     };
@@ -57,6 +55,13 @@ hitBtn.addEventListener('click', function () {
 btnStand.addEventListener('click', function () {
     playerMove = 2;
     btnStand.classList.add('btn-active');
+    console.log(dealerCardValue);
+    for (let i = 0; dealerCardValue <= 15; i++) {
+            dealCard(i, dealerHand);
+    }
+
+    
+
     compareScore();
 });
 
@@ -64,7 +69,8 @@ btnStand.addEventListener('click', function () {
 function init () {
 
     location.reload();
-    
+    playerTotalValue = [];
+    dealerTotalValue = [];
     playerWin.innerHTML = '';
     let ph = document.querySelector('.player-hand');
     let dh = document.querySelector('.dealer-hand');
@@ -108,7 +114,7 @@ const generateDeck = function () {
 
 // Start the game
 function startGame () {
-    console.log(playerTotalValue);
+    console.log(dealerTotalValue);
     playerWin.classList.remove('show');
     generateDeck();
     shuffle(deck);
@@ -143,11 +149,9 @@ function dealCard (lastCard, user) {
                                     </p>
                                     </div>`;
             
-            divElement.innerHTML = cardBackHtml;
-            divElement.classList.add('rotate-l');
-            user.appendChild(divElement);
+            
 
-            coverCards(deck[i]);
+            coverCards(deck[i], divElement, cardBackHtml, html);
             
             if (deck[i].value === 'Jack' || deck[i].value === 'Queen' || deck[i].value === 'King') {
                 playerCardValue += 10;
@@ -160,12 +164,10 @@ function dealCard (lastCard, user) {
                     playerCardValue -= 10;
                     playerTotalValue.push(playerCardValue);
                     playerScoreSpan.textContent = playerCardValue + "Ace (1)";
-                    //console.log("Current Value: ", playerCardValue);
                     deck.pop();
                 }else {
                     playerScoreSpan.textContent = playerCardValue + "Ace (11)";
                     playerTotalValue.push(playerCardValue);
-                    //console.log("playerCardValue is: ", playerCardValue);
                     deck.pop();
                 };
                 
@@ -173,23 +175,6 @@ function dealCard (lastCard, user) {
                 playerTotalValue.push(playerCardValue);
                 playerCardValue += deck[i].value;
                 deck.pop();
-            };
-
-            // Reveals Dealer Cards
-            function coverCards (cardIndex, index, face) {
-                this.cardIndex = cardIndex;
-
-                if (playerTotalValue.length <= 1) {
-                    divElement.innerHTML = cardBackHtml;
-                    divElement.classList.add('rotate-l');
-                    user.appendChild(divElement);
-                    console.log(`Index of cards is: ${cardIndex.suit}`);    
-                }else {
-                    divElement.innerHTML = html;
-                    divElement.classList.add('rotate-l');
-                    user.appendChild(divElement);
-                }
-
             };
 
             // Dealer Cards
@@ -202,24 +187,25 @@ function dealCard (lastCard, user) {
                                     </p>
                                     </div>`;
             
-            divElement.innerHTML = cardBackHtml;
-            divElement.classList.add('rotate-l');
-            user.appendChild(divElement);
+            
+
+            coverCards(deck[i], divElement, cardBackHtml, html);
     
             if (deck[i].value === 'Jack' || deck[i].value === 'Queen' || deck[i].value === 'King') {
                 dealerCardValue += 10;
+                dealerTotalValue.push(dealerCardValue);
                 deck.pop();
             }else if (deck[i].value === 'Ace'){
                 dealerCardValue += 11;
 
                 if (dealerCardValue > 21) {
                     dealerCardValue -= 10;
+                    dealerTotalValue.push(dealerCardValue);
                     dealerScoreSpan.textContent = dealerCardValue + "Ace (1)";
-                    //console.log("Current Value: ", dealerCardValue);
                     deck.pop();
                 }else {
+                    dealerTotalValue.push(dealerCardValue);
                     dealerScoreSpan.textContent = dealerCardValue + "Ace (11)";
-                    //console.log("dealerCardValue is: ", dealerCardValue);
                     deck.pop();
                 };
 
@@ -229,9 +215,32 @@ function dealCard (lastCard, user) {
                 deck.pop();
             };        
         };
+        
+        // Reveals Dealer Cards
+        function coverCards (cardIndex, card, cardBackHtml, html) {
+            this.cardIndex = cardIndex;
+            this.card = card;
+            this.cardBackHtml = cardBackHtml;
+            this.html = html;
+
+            console.log(card);
+            if (dealerTotalValue.length < 2) {
+                card.innerHTML = cardBackHtml;
+                card.classList.add('rotate-l');
+                user.appendChild(card);
+                //console.log(`Index of cards is: ${cardIndex.suit}`);    
+            }else {
+                card.innerHTML = html;
+                card.classList.add('rotate-l');
+                user.appendChild(card);
+            };
+            
+        };
+        playerScore();
+            dealerScore();
     };
 
-    playerScore();
+    
 };
 
 function playerStatus () {
@@ -252,7 +261,7 @@ function playerScore () {
         playerScoreSpan.textContent = playerCardValue;
         playerWin.classList.add('show');
         playerWin.classList.add('bust');
-        playerWin.textContent = 'BUST';
+        playerWin.textContent = 'Bust!';
 
         playerMove = 2;
 
@@ -276,8 +285,8 @@ function dealerScore () {
     }else if (dealerCardValue >= 22) {
         dealerScoreSpan.textContent = dealerCardValue;
         dealerWin.classList.add('show');
-        dealerWin.classList.add('blackjack');
-        dealerWin.textContent = 'BLACK JACK';
+        dealerWin.classList.add('bust');
+        dealerWin.textContent = 'Bust!';
 
     }else if (dealerCardValue === 21) {
         dealerScoreSpan.textContent = dealerCardValue;
@@ -290,12 +299,17 @@ function dealerScore () {
 
 function compareScore () {
     
-    if(dealerCardValue > playerCardValue) {
+    if(dealerCardValue > playerCardValue && !dealerCardValue > 21 || dealerCardValue === 21) {
+        console.log("Dealer Cards: ", dealerCardValue);
         console.log("Dealer Wins!");
-    }else if (playerCardValue > dealerCardValue){
+        dealerScore();
+    }else if (playerCardValue > dealerCardValue && !playerCardValue > 21 || playerCardValue === 21){
+        console.log("Dealer Cards: ", dealerCardValue);
         console.log("Player Wins!");
+        dealerScore();
     }else {
         console.log("Draw");
+        console.log("Dealer Cards: ", dealerCardValue);
     };
 };
 
