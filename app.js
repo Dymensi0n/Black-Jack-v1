@@ -196,7 +196,13 @@ function dealCard (lastCard, user) {
         }else if (user === dealerHand) {
 
             const divElement = document.createElement('div');
-            const html = divElement.innerHTML = `<div class="card"><img class="svg-icon" src="${deck[i].suit}" width="50" height="50"><p>${deck[i].value}</p></div>`;
+            const html = `<div class="card"><img class="svg-icon" src="${deck[i].suit}" width="50" height="50"><p>${deck[i].value}</p></div>`;
+            const cardBackHtml = `<div class="${cardBackStyle}">
+                                    <img class="svg-icon-back" src="${deck[i].suit = cardBack}" width="120" height="180"><p>
+                                    </p>
+                                    </div>`;
+            
+            divElement.innerHTML = cardBackHtml;
             divElement.classList.add('rotate-l');
             user.appendChild(divElement);
     
