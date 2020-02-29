@@ -77,23 +77,17 @@ p {
     padding: 0;
 }
 
-.player-score {
+.player-score, .dealer-score {
     padding: 0 10px;
 }
 
-.player-wins {
+.player-wins, .dealer-wins {
     padding: 0 10px;
     width: 100%;
-    margin: 0 auto;
+    margin: 0 0 0 60px;
 }
 
-.dealer-hand {
-    list-style-type: none;
-    text-align: center;
-    padding: 0 0 0 10px;
-}
-
-.player-hand {
+.player-hand, .dealer-hand {
     list-style-type: none;
     text-align: center;
     padding: 0 0 0 10px;

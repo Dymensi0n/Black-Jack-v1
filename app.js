@@ -1,10 +1,12 @@
 // DOM Elements
 const dealerHand = document.querySelector('.dealer-hand');
-const dealerWin = document.querySelector('.dealer-option')
+const dealerOption = document.querySelector('.dealer-option')
 const dealerScoreSpan = document.querySelector('.dealer-score');
+const dealerWins = document.querySelector('.dealer-wins');
+const playerWins = document.querySelector('.player-wins');
 
 const playerHand = document.querySelector('.player-hand');
-const playerWin = document.querySelector('.player-option');
+const playerOption = document.querySelector('.player-option');
 const playerScoreSpan = document.querySelector('.player-score');
 
 const cardBackStyle = document.querySelector('.card-back');
@@ -22,6 +24,7 @@ const suitsSvg = ['svg/Suits_Vectors_Diamond.svg',
                     'svg/Suits_Vectors_Spade.svg'];
 
 const suits = ['Diamond', 'Club', 'Heart', 'Spade'];
+const deck = [];
 
 let playerTotalValue = [];
 let playerCardValue = 0;
@@ -29,7 +32,8 @@ let playerCardValue = 0;
 let dealerTotalValue = [];
 let dealerCardValue = 0;
 
-const deck = [];
+let playerWinScore = 0;
+let dealerWinScore = 0;
 
 let playerMove = 0; // 0 = default, 1 = Hit, 2 = Stand
 
@@ -49,31 +53,30 @@ hitBtn.addEventListener('click', function () {
         shuffle(deck);
         dealCard(1, playerHand);
     };
+    
 });
 
 // Stand Button
 btnStand.addEventListener('click', function () {
     playerMove = 2;
     btnStand.classList.add('btn-active');
-    
-    for (let i = 0; dealerCardValue < 20; i++) {
-            dealCard(i, dealerHand);
-    }
 
+    if (dealerCardValue < 20 && playerMove === 2) {
+        shuffle(deck);
+        dealCard(1, dealerHand);
+    };
 });
 
 // Initialize the game
 function init () {
 
     location.reload();
+    playerMove = 0;
     playerTotalValue = [];
     dealerTotalValue = [];
-    playerWin.innerHTML = '';
-    let ph = document.querySelector('.player-hand');
-    let dh = document.querySelector('.dealer-hand');
-    playerMove = 0;
-    ph.innerHTML = '';
-    dh.innerHTML = '';
+    playerOption.innerHTML = '';
+    playerHand.innerHTML = '';
+    dealerHand.innerHTML = '';
     startGame();
 
 }
@@ -97,29 +100,33 @@ function shuffle(array) {
 // Add cards to the deck
 const generateDeck = function () {
 
-    suitsSvg.forEach(function (suit) {
+    for (let i = 0; deck.length < 57; i++) {
 
-        cardValue.forEach(function (value) {
-    
-            const card = {value: value, suit: suit};
-            deck.push(card);
+        suitsSvg.forEach(function (suit) {
+
+            cardValue.forEach(function (value) {
+        
+                const card = {value: value, suit: suit};
+                deck.push(card);
+            });
         });
-    });
+    };
 };
 
 
 
 // Start the game
 function startGame () {
-    playerWin.classList.remove('show');
-    dealerWin.classList.remove('show');
+    playerOption.classList.remove('show');
+    dealerOption.classList.remove('show');
     generateDeck();
+    shuffle(deck);
+    shuffle(deck);
+    shuffle(deck);
     shuffle(deck);
     dealCard(2, dealerHand);
     shuffle(deck);
     dealCard(2, playerHand);
-    // dealerScore();
-    // playerScore();
 
 };
 
@@ -172,6 +179,7 @@ function dealCard (lastCard, user) {
                 playerTotalValue.push(playerCardValue);
                 playerCardValue += deck[i].value;
                 deck.pop();
+                console.log("Player Deck: ", deck);
             };
 
             // Dealer Cards
@@ -210,10 +218,11 @@ function dealCard (lastCard, user) {
                 dealerTotalValue.push(deck[i].value);
                 dealerCardValue += deck[i].value;
                 deck.pop();
+                console.log("Dealer Deck: ", deck);
             };        
         };
         
-        // Reveals Dealer Cards
+        // Covers Dealer Cards
         function coverCards (cardIndex, card, cardBackHtml, html) {
             this.cardIndex = cardIndex;
             this.card = card;
@@ -233,15 +242,20 @@ function dealCard (lastCard, user) {
             };  
         };
     };
-
     playerScore();
     dealerScore();
 };
 
-function playerStatus () {
-    if (playerMove === 0) {
+// function playerStatus () {
+//     if (playerMove === 0) {
 
-    }
+//     };
+// };
+
+function revealCards () {
+    if (playerMove === 2) {
+        dealerTotalValue[0];
+    };
 };
 
 // Player score function for total value of hand
@@ -249,22 +263,25 @@ function playerScore () {
 
     if (playerCardValue < 21) {
         playerScoreSpan.textContent = playerCardValue;
-        playerWin.classList.add('show');
-        playerWin.textContent = 'Hit?';
+        playerOption.classList.add('show');
+        playerOption.textContent = 'Hit?';
     
     }else if (playerCardValue >= 22) {
         playerScoreSpan.textContent = playerCardValue;
-        playerWin.classList.add('show');
-        playerWin.classList.add('bust');
-        playerWin.textContent = 'Bust!';
+        playerOption.classList.add('show');
+        playerOption.classList.add('bust');
+        playerOption.textContent = 'Bust!';
+        dealerWins.textContent = `Wins: ${dealerWinScore++}`;
 
         playerMove = 2;
 
     }else if (playerCardValue === 21) {
         playerScoreSpan.textContent = playerCardValue;
-        playerWin.classList.add('show');
-        playerWin.classList.add('blackjack');
-        playerWin.textContent = 'BLACK JACK';
+        playerOption.classList.add('show');
+        playerOption.classList.add('blackjack');
+        playerOption.textContent = 'BLACK JACK';
+        playerWins.textContent = `Wins: ${playerWinScore++}`;
+
         playerMove = 2;
     };
 
@@ -276,20 +293,22 @@ function dealerScore () {
 
     if (dealerCardValue < 21) {
         dealerScoreSpan.textContent = dealerCardValue;
-        dealerWin.classList.add('show');
-        dealerWin.textContent = '...';
+        dealerOption.classList.add('show');
+        dealerOption.textContent = '...';
     
     }else if (dealerCardValue >= 22) {
         dealerScoreSpan.textContent = dealerCardValue;
-        dealerWin.classList.add('show');
-        dealerWin.classList.add('bust');
-        dealerWin.textContent = 'Bust!';
+        dealerOption.classList.add('show');
+        dealerOption.classList.add('bust');
+        dealerOption.textContent = 'Bust!';
+        playerWins.textContent = `Wins: ${playerWinScore++}`;
 
     }else if (dealerCardValue === 21) {
         dealerScoreSpan.textContent = dealerCardValue;
-        dealerWin.classList.add('show');
-        dealerWin.classList.add('blackjack');
-        dealerWin.textContent = 'BLACK JACK';
+        dealerOption.classList.add('show');
+        dealerOption.classList.add('blackjack');
+        dealerOption.textContent = 'BLACK JACK';
+        dealerWins.textContent = `Wins: ${dealerWinScore++}`;
     };
 
     compareScore();
@@ -297,22 +316,23 @@ function dealerScore () {
 };
 
 function compareScore () {
-    
-    if(dealerCardValue > playerCardValue && !dealerCardValue > 21 || dealerCardValue === 21) {
+
+    if (dealerCardValue > playerCardValue && !dealerCardValue > 21 || dealerCardValue === 21) {
         console.log("Dealer Cards: ", dealerTotalValue);
         console.log("Dealer Total Value: ", dealerCardValue);
         console.log("Dealer Wins!");
-        // dealerScore();
+        dealerWins.textContent = `Wins: ${dealerWinScore++}`;
+
     }else if (playerCardValue > dealerCardValue && !playerCardValue > 21 || playerCardValue === 21){
         console.log("Dealer Cards: ", dealerTotalValue);
         console.log("Dealer Total Value: ", dealerCardValue);
         console.log("Player Wins!");
-        // dealerScore();
+        playerWins.textContent = `Wins: ${playerWinScore++}`;
+
     }else {
         console.log("Dealer Cards: ", dealerTotalValue);
         console.log("Dealer Total Value: ", dealerCardValue);
         console.log("Draw");
-        
     };
 };
 
