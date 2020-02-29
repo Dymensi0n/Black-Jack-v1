@@ -55,14 +55,11 @@ hitBtn.addEventListener('click', function () {
 btnStand.addEventListener('click', function () {
     playerMove = 2;
     btnStand.classList.add('btn-active');
-    console.log(dealerCardValue);
-    for (let i = 0; dealerCardValue <= 15; i++) {
+    
+    for (let i = 0; dealerCardValue < 20; i++) {
             dealCard(i, dealerHand);
     }
 
-    
-
-    compareScore();
 });
 
 // Initialize the game
@@ -114,15 +111,15 @@ const generateDeck = function () {
 
 // Start the game
 function startGame () {
-    console.log(dealerTotalValue);
     playerWin.classList.remove('show');
+    dealerWin.classList.remove('show');
     generateDeck();
     shuffle(deck);
     dealCard(2, dealerHand);
     shuffle(deck);
     dealCard(2, playerHand);
-    dealerScore();
-    playerScore();
+    // dealerScore();
+    // playerScore();
 
 };
 
@@ -223,7 +220,7 @@ function dealCard (lastCard, user) {
             this.cardBackHtml = cardBackHtml;
             this.html = html;
 
-            console.log(card);
+            //console.log(card);
             if (dealerTotalValue.length < 2) {
                 card.innerHTML = cardBackHtml;
                 card.classList.add('rotate-l');
@@ -233,14 +230,12 @@ function dealCard (lastCard, user) {
                 card.innerHTML = html;
                 card.classList.add('rotate-l');
                 user.appendChild(card);
-            };
-            
+            };  
         };
-        playerScore();
-            dealerScore();
     };
 
-    
+    playerScore();
+    dealerScore();
 };
 
 function playerStatus () {
@@ -272,6 +267,8 @@ function playerScore () {
         playerWin.textContent = 'BLACK JACK';
         playerMove = 2;
     };
+
+    compareScore();
     return playerCardValue;
 };
 // Player score function for total value of hand
@@ -294,22 +291,28 @@ function dealerScore () {
         dealerWin.classList.add('blackjack');
         dealerWin.textContent = 'BLACK JACK';
     };
+
+    compareScore();
     return dealerCardValue;
 };
 
 function compareScore () {
     
     if(dealerCardValue > playerCardValue && !dealerCardValue > 21 || dealerCardValue === 21) {
-        console.log("Dealer Cards: ", dealerCardValue);
+        console.log("Dealer Cards: ", dealerTotalValue);
+        console.log("Dealer Total Value: ", dealerCardValue);
         console.log("Dealer Wins!");
-        dealerScore();
+        // dealerScore();
     }else if (playerCardValue > dealerCardValue && !playerCardValue > 21 || playerCardValue === 21){
-        console.log("Dealer Cards: ", dealerCardValue);
+        console.log("Dealer Cards: ", dealerTotalValue);
+        console.log("Dealer Total Value: ", dealerCardValue);
         console.log("Player Wins!");
-        dealerScore();
+        // dealerScore();
     }else {
+        console.log("Dealer Cards: ", dealerTotalValue);
+        console.log("Dealer Total Value: ", dealerCardValue);
         console.log("Draw");
-        console.log("Dealer Cards: ", dealerCardValue);
+        
     };
 };
 

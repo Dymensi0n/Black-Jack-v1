@@ -67,6 +67,26 @@ p {
     background-color: rgb(38, 161, 0);
 }
 
+.btn-active {
+    background: var(--suit-red);
+}
+
+.new-game-text {
+    font-family: var(--font-family);
+    font-size: 1.5rem;
+    padding: 0;
+}
+
+.player-score {
+    padding: 0 10px;
+}
+
+.player-wins {
+    padding: 0 10px;
+    width: 100%;
+    margin: 0 auto;
+}
+
 .dealer-hand {
     list-style-type: none;
     text-align: center;
@@ -180,15 +200,6 @@ p {
     margin: auto;
     color: var(--suit-red);
     text-shadow: 2px 2px 4px black;
-}
-
-.btn-active {
-    background: var(--suit-red);
-}
-
-.new-game-text {
-    font-family: var(--font-family);
-    font-size: 1.5rem;
 }
 
 .show {
