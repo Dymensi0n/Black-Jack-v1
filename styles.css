@@ -9,7 +9,7 @@
 }
 
 @keyframes throwCard {
-    from {transform: rotate(45deg); transform-origin: 20% 50%; opacity: 0;}
+    from {transform: rotate(-60deg); transform-origin: 0% 50%; opacity: 0;}
     to {top: 0px; opacity: 100%;}
 }
 
@@ -37,7 +37,7 @@ p {
     background: black;
     min-width: 100%;
     padding: 2%;
-    border-radius: 20px;
+    border-radius: 0 0 20px 20px;
     box-shadow: 2px 5px 20px rgba(0, 0, 0, 0.5);
 }
 
@@ -70,13 +70,13 @@ p {
 .dealer-hand {
     list-style-type: none;
     text-align: center;
-    padding: 0;
+    padding: 0 0 0 10px;
 }
 
 .player-hand {
     list-style-type: none;
     text-align: center;
-    padding: 0;
+    padding: 0 0 0 10px;
 }
 
 .hand-text {
@@ -138,16 +138,22 @@ p {
 
 .player-option {
     width: 100%;
-    margin: auto;
-    text-align: center;
+    margin: 0;
     color: var(--grey-color);
 }
 
 .blackjack {
+    font-weight: bolder;
     width: 100%;
     margin: auto;
-    text-align: center;
     color: var(--suit-black);
+}
+
+.bust {
+    font-weight: bolder;
+    width: 100%;
+    margin: auto;
+    color: var(--suit-red);
 }
 
 .btn-active {
@@ -161,9 +167,9 @@ p {
 
 .show {
     display: inline-block;
-    width: 100%;
-    text-align: center;
+    text-align: left;
     font-size: 4rem;
+    line-height: 80px;
     animation-name: flashWin;
     animation-duration: 0.75s;
     animation-timing-function: ease;

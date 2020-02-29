@@ -198,12 +198,14 @@ function playerScore () {
     }else if (playerCardValue >= 22) {
         playerScoreSpan.textContent = playerCardValue;
         playerWin.classList.add('show');
+        playerWin.classList.add('bust');
         playerWin.textContent = 'BUST';
         playerMove = 2;
 
     }else if (playerCardValue === 21) {
         playerScoreSpan.textContent = playerCardValue;
         playerWin.classList.add('show');
+        playerWin.classList.add('blackjack');
         playerWin.textContent = 'BLACK JACK';
         playerMove = 2;
     };
