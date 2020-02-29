@@ -1,5 +1,6 @@
 // DOM Elements
 const dealerHand = document.querySelector('.dealer-hand');
+const dealerWin = document.querySelector('.dealer-option')
 const dealerScoreSpan = document.querySelector('.dealer-score');
 
 const playerHand = document.querySelector('.player-hand');
@@ -31,13 +32,8 @@ let playerMove = 0; // 0 = default, 1 = Hit, 2 = Stand
 
 // Shuffle Button
 shuffleBtn.addEventListener('click', function () {
-    location.reload();
-    let ph = document.querySelector('.player-hand');
-    let dh = document.querySelector('.dealer-hand');
-    playerMove = 0;
-    ph.innerHTML = '';
-    dh.innerHTML = '';
-    startGame();
+
+    init();
 
 });
 
@@ -51,11 +47,26 @@ hitBtn.addEventListener('click', function () {
     };
 });
 
+// Stand Button
 btnStand.addEventListener('click', function () {
     playerMove = 2;
     btnStand.classList.add('btn-active');
     compare();
 });
+
+// Initialize the game
+function init () {
+
+    location.reload();
+    playerWin.innerHTML = '';
+    let ph = document.querySelector('.player-hand');
+    let dh = document.querySelector('.dealer-hand');
+    playerMove = 0;
+    ph.innerHTML = '';
+    dh.innerHTML = '';
+    startGame();
+
+}
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -104,7 +115,7 @@ function startGame () {
 // Deal 2 cards
 function dealCard (lastCard, user) {
 
-    console.log(user);
+    
     // If there are 2 cards left then create a new deck
     if (deck.length <= 2) {
         console.log('Generating a new deck');
@@ -122,7 +133,6 @@ function dealCard (lastCard, user) {
             user.appendChild(divElement);
     
             if (deck[i].value === 'Jack' || deck[i].value === 'Queen' || deck[i].value === 'King') {
-                //console.log("Found a face card! ->>>", deck[i].value);
                 playerCardValue += 10;
                 deck.pop();
             }else if (deck[i].value === 'Ace'){
@@ -131,11 +141,11 @@ function dealCard (lastCard, user) {
                 if (playerCardValue > 21) {
                     playerCardValue -= 10;
                     playerScoreSpan.textContent = playerCardValue + "Ace (1)";
-                    console.log("Current Value: ", playerCardValue);
+                    //console.log("Current Value: ", playerCardValue);
                     deck.pop();
                 }else {
                     playerScoreSpan.textContent = playerCardValue + "Ace (11)";
-                    console.log("playerCardValue is: ", playerCardValue);
+                    //console.log("playerCardValue is: ", playerCardValue);
                     deck.pop();
                 };
                 
@@ -162,11 +172,11 @@ function dealCard (lastCard, user) {
                 if (dealerCardValue > 21) {
                     dealerCardValue -= 10;
                     dealerScoreSpan.textContent = dealerCardValue + "Ace (1)";
-                    console.log("Current Value: ", dealerCardValue);
+                    //console.log("Current Value: ", dealerCardValue);
                     deck.pop();
                 }else {
                     dealerScoreSpan.textContent = dealerCardValue + "Ace (11)";
-                    console.log("dealerCardValue is: ", dealerCardValue);
+                    //console.log("dealerCardValue is: ", dealerCardValue);
                     deck.pop();
                 };
 
@@ -216,13 +226,20 @@ function dealerScore () {
 
     if (dealerCardValue < 21) {
         dealerScoreSpan.textContent = dealerCardValue;
+        dealerWin.classList.add('show');
+        dealerWin.textContent = '...';
     
     }else if (dealerCardValue >= 22) {
-        dealerCardValue = 0;
         dealerScoreSpan.textContent = dealerCardValue;
+        dealerWin.classList.add('show');
+        dealerWin.classList.add('blackjack');
+        dealerWin.textContent = 'BLACK JACK';
 
     }else if (dealerCardValue === 21) {
         dealerScoreSpan.textContent = dealerCardValue;
+        dealerWin.classList.add('show');
+        dealerWin.classList.add('blackjack');
+        dealerWin.textContent = 'BLACK JACK';
     };
     return dealerCardValue;
 };

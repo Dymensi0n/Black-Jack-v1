@@ -4,7 +4,7 @@
     --icon-color: rgb(226, 216, 76);
     --suit-red: red;
     --suit-black: black;
-    --grey-color: rgba(255, 255, 255, 0.25);
+    --grey-color: rgba(255, 255, 255, 0.5);
     --font-family: 'Ubuntu', sans-serif;
 }
 
@@ -142,11 +142,18 @@ p {
     color: var(--grey-color);
 }
 
+.dealer-option {
+    width: 100%;
+    margin: 0;
+    color: var(--grey-color);
+}
+
 .blackjack {
     font-weight: bolder;
     width: 100%;
     margin: auto;
     color: var(--suit-black);
+    text-shadow: 2px 2px 4px black;
 }
 
 .bust {
@@ -154,6 +161,7 @@ p {
     width: 100%;
     margin: auto;
     color: var(--suit-red);
+    text-shadow: 2px 2px 4px black;
 }
 
 .btn-active {
