@@ -37,6 +37,9 @@ let dealerWinScore = 0;
 
 let playerMove = 0; // 0 = default, 1 = Hit, 2 = Stand
 
+let ds = JSON.parse(localStorage.getItem('Dealer'));
+let ps = JSON.parse(localStorage.getItem('Player'));
+
 // Shuffle Button
 shuffleBtn.addEventListener('click', function () {
 
@@ -47,7 +50,7 @@ shuffleBtn.addEventListener('click', function () {
 // Hit Button
 hitBtn.addEventListener('click', function () {
     
-    console.log(playerTotalValue);
+    // console.log(playerTotalValue);
 
     if (playerMove === 0) {
         shuffle(deck);
@@ -71,6 +74,8 @@ btnStand.addEventListener('click', function () {
 function init () {
 
     location.reload();
+    playerWinScore = ps;
+    dealerWinScore = ds;
     playerMove = 0;
     playerTotalValue = [];
     dealerTotalValue = [];
@@ -79,7 +84,7 @@ function init () {
     dealerHand.innerHTML = '';
     startGame();
 
-}
+};
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -179,7 +184,7 @@ function dealCard (lastCard, user) {
                 playerTotalValue.push(playerCardValue);
                 playerCardValue += deck[i].value;
                 deck.pop();
-                console.log("Player Deck: ", deck);
+                // console.log("Player Deck: ", deck);
             };
 
             // Dealer Cards
@@ -218,7 +223,7 @@ function dealCard (lastCard, user) {
                 dealerTotalValue.push(deck[i].value);
                 dealerCardValue += deck[i].value;
                 deck.pop();
-                console.log("Dealer Deck: ", deck);
+                // console.log("Dealer Deck: ", deck);
             };        
         };
         
@@ -317,22 +322,27 @@ function dealerScore () {
 
 function compareScore () {
 
+    
+    console.log('Dealer Score is: ', ds);
+    console.log('Player Score is: ', ps);
     if (dealerCardValue > playerCardValue && !dealerCardValue > 21 || dealerCardValue === 21) {
-        console.log("Dealer Cards: ", dealerTotalValue);
-        console.log("Dealer Total Value: ", dealerCardValue);
-        console.log("Dealer Wins!");
-        dealerWins.textContent = `Wins: ${dealerWinScore++}`;
+        // console.log("Dealer Cards: ", dealerTotalValue);
+        // console.log("Dealer Total Value: ", dealerCardValue);
+        // console.log("Dealer Wins!");
+        dealerWins.textContent = `Wins: ${localStorage.setItem('Dealer', JSON.stringify(dealerWinScore++))}`;
+        
 
     }else if (playerCardValue > dealerCardValue && !playerCardValue > 21 || playerCardValue === 21){
-        console.log("Dealer Cards: ", dealerTotalValue);
-        console.log("Dealer Total Value: ", dealerCardValue);
-        console.log("Player Wins!");
+        // console.log("Dealer Cards: ", dealerTotalValue);
+        // console.log("Dealer Total Value: ", dealerCardValue);
+        // console.log("Player Wins!");
         playerWins.textContent = `Wins: ${playerWinScore++}`;
+        localStorage.setItem('Player', playerWinScore);
 
     }else {
-        console.log("Dealer Cards: ", dealerTotalValue);
-        console.log("Dealer Total Value: ", dealerCardValue);
-        console.log("Draw");
+        // console.log("Dealer Cards: ", dealerTotalValue);
+        // console.log("Dealer Total Value: ", dealerCardValue);
+        // console.log("Draw");
     };
 };
 

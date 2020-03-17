@@ -4,11 +4,16 @@
 
 
 ### Made using:
-HTML
-CSS
-Javascript
+HTML - 
+CSS - 
+Javascript - 
 Bootstrap
 #
+### _March 16, 2020_
+### Bugs:
+* Sometimes the card will display the back image svg instead of the suit symbol.
+* Dealer score and player score values are submitted to local storage, however they are not displaying correctily in the html.
+* Unable to start new game if both players triggered _"Bust!"_
 
 ## Shuffling the deck of cards
 ### Uses the Fisher-Yates algorithm from:
